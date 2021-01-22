@@ -1,0 +1,42 @@
+#!/bin/bash
+
+set -e
+
+source ${HTTPD_CONTAINER_SCRIPTS_PATH}/common.sh
+
+echo "---> Enabling s2i support in httpd24 image by babolbr"
+
+#config_s2i
+
+######## CUSTOMIZATION STARTS HERE ############
+echo "HTTPD_CONTAINER_SCRIPTS_PATH : ${HTTPD_CONTAINER_SCRIPTS_PATH}"
+echo "---> Installing application source by babolbr"
+cp -Rf /tmp/src/*.html ./
+
+echo "---> Aqui comeca minha alteracao. ESSA DEVE APARECER NO LOG DA APLICACAO"
+
+DATE=$(date "+%F")
+echo "---> Gerando isso dia ${DATE}"
+echo "GERANDO ESTA MENSAGEM NO ARQUIVO NA DATA DE ${DATE}" >>./info.html
+echo "MENSAGEM FINAL" >./info.html
+
+######## CUSTOMIZATION ENDS HERE ############
+
+if [ -d ./httpd-cfg ]; then
+  echo "---> Copying httpd configuration files..."
+  if [ "$(ls -A ./httpd-cfg/*.conf)" ]; then
+    cp -v ./httpd-cfg/*.conf "${HTTPD_CONFIGURATION_PATH}"
+    rm -rf ./httpd-cfg
+  fi
+else
+  if [ -d ./cfg ]; then
+    echo "---> Copying httpd configuration files from deprecated './cfg' directory, use './httpd-cfg' instead..."
+    if [ "$(ls -A ./cfg/*.conf)" ]; then
+      cp -v ./cfg/*.conf "${HTTPD_CONFIGURATION_PATH}"
+      rm -rf ./cfg
+    fi
+  fi
+fi
+
+# Fix source directory permissions
+fix-permissions ./
