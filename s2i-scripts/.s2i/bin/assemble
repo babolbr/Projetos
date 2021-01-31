@@ -4,9 +4,9 @@ set -e
 
 source ${HTTPD_CONTAINER_SCRIPTS_PATH}/common.sh
 
-echo "---> Enabling s2i support in httpd24 image by babolbr-9"
+echo "---> Enabling s2i support in httpd24 image by babolbr-10"
 
-/usr/libexec/s2i/assemble
+#/usr/libexec/s2i/assemble
 #config_s2i
 
 ######## CUSTOMIZATION STARTS HERE ############
@@ -14,7 +14,7 @@ echo "HTTPD_CONTAINER_SCRIPTS_PATH : ${HTTPD_CONTAINER_SCRIPTS_PATH}"
 echo "---> Installing application source by babolbr"
 cp -Rf /tmp/src/*.html ./
 
-echo "---> Aqui comeca minha alteracao. sem config, com assemble"
+echo "---> Aqui comeca minha alteracao. sem config, SEM assemble"
 
 DATE=$(date "+%Y-%m-%d")
 echo "---> Gerando isso: ${DATE}"
