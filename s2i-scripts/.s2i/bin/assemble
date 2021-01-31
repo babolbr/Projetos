@@ -4,7 +4,7 @@ set -e
 
 source ${HTTPD_CONTAINER_SCRIPTS_PATH}/common.sh
 
-echo "---> Enabling s2i support in httpd24 image by babolbr-7"
+echo "---> Enabling s2i support in httpd24 image by babolbr-8"
 
 #/usr/libexec/s2i
 config_s2i
@@ -16,7 +16,7 @@ cp -Rf /tmp/src/*.html ./
 
 echo "---> Aqui comeca minha alteracao. Testando a montagem do Date"
 
-DATE=$(date "+%Y/%m/%d")
+DATE=$(date "+%Y-%m-%d")
 echo "---> Gerando isso: ${DATE}"
 echo "GERANDO ESTA MENSAGEM NO ARQUIVO NA DATA DE ${DATE}" >>./info.html
 echo "MENSAGEM FINAL" >>./info.html
